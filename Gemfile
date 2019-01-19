@@ -2,6 +2,12 @@ source 'https://rubygems.org'
 
 #security dep in older version
 gem "activejob", '4.2.11'
+#for token authentication
+gem 'oauth2'
+
+gem "sinatra"
+#for models
+gem "data_mapper", '1.2.0'
 
 gem 'rake', '12.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
