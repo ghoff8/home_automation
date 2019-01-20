@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+  <body>
+    <div class="container">
+      <div id="header" class="span-24">
+        <p>SmartApp</p>
+      </div>
+      <div class="table">
+       <h1>All Listings</h1>
+        <table id="listings">
+          <thead>
+            <tr>
+              <th>ID</th> 
+              <th>Name</th>
+              <th>Devices</th>
+              <th>Time Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @listings&.each do |listing| %>
+              <tr>
+                <td>
+                  <%= listing.id %>
+                </td>
+                <td>
+                  <%= listing.name %>
+                </td>
+                <td>
+                  <%= listing.devices %>
+                </td>
+                <td>
+                  <%= listing.time_created %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Add New Listing', new_listing_path %>
+      </div>
+      <div id="footer" class="span-24">
+        <p>Created by Grant Hoffmann</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -102,11 +102,12 @@ class SmartApp < Sinatra::Base
       http.use_ssl = (url.scheme == "https")
     
       response = http.request(req)
-  
+      json = JSON.parse(response.body)
+      
       # get the endpoint from the JSON:
-      #uri = json[0]['uri']
+      uri = json[0]['uri']
 
-      @listings.data = JSON.parse(response.body)
-      erb :dash
+      @listings.uri = uri
+      erb :index
     end
 end
