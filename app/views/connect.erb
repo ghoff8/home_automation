@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <% if flash[:message] %>
+      <p>
+        <span><%= flash[:message] %></span>
+      </p>
+    <% end %>
+    
+    <a href="/authorize" method="get">Connect with SmartThings</a>
+    
+</html>

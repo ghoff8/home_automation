@@ -1,11 +1,21 @@
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/flash'
 require 'oauth2'
 require 'json'
 require "net/http"
 require "uri"
+require "./lib/listings.rb"
 
 class SmartApp < Sinatra::Base
+  
+    enable :sessions
+    register Sinatra::Flash
+    
+    before do
+      @listings = Listings.new()
+    end
+    
     # Our client ID and secret, used to get the access token
     CLIENT_ID = '3ca4bb57-753a-42bf-8cea-aa5ace621132'
     CLIENT_SECRET = '0f941e3d-cacb-40f0-9ea6-e8d9b65da3e0'
@@ -36,7 +46,7 @@ class SmartApp < Sinatra::Base
     
     # handle requests to the application root
     get '/' do
-      %(<a href="/authorize">Connect with SmartThings</a>)
+      erb :connect
     end
     
     # handle requests to /authorize URL
@@ -49,6 +59,11 @@ class SmartApp < Sinatra::Base
     # will tell SmartThings to call this URL with our
     # authorization code once we've authenticated.
     get '/oauth/callback' do
+      
+        if (params[:error] == "access_denied")
+          flash[:deny] = "Access Denied"
+          redirect '/'
+        end
         codeToSend = params[:code]
         # Use the code to get the token.
         response = client.auth_code.get_token(codeToSend, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: redirect_uri)
@@ -60,13 +75,13 @@ class SmartApp < Sinatra::Base
         # expires in (seconds from now), and the expires at (in epoch time)
         puts 'TOKEN EXPIRES IN ' + response.expires_in.to_s
         puts 'TOKEN EXPIRES AT ' + response.expires_at.to_s
-        redirect '/getswitch'
+        redirect '/getDevices'
     end
     
     # handle requests to the /getSwitch URL. This is where
     # we will make requests to get information about the configured
     # switch.
-    get '/getswitch' do
+    get '/getDevices' do
       # If we get to this URL without having gotten the access token
       # redirect back to root to go through authorization
       if !authenticated?
@@ -75,7 +90,7 @@ class SmartApp < Sinatra::Base
     
       token = session[:access_token]
     
-      # make a request to the SmartThins endpoint URI, using the token,
+      # make a request to the SmartThings endpoint URI, using the token,
       # to get our endpoints
       url = URI.parse(endpoints_uri)
       req = Net::HTTP::Get.new(url.request_uri)
@@ -87,14 +102,11 @@ class SmartApp < Sinatra::Base
       http.use_ssl = (url.scheme == "https")
     
       response = http.request(req)
-      json = JSON.parse(response.body)
-    
-      # debug statement
-      puts json
-      
+  
       # get the endpoint from the JSON:
-      uri = json[0]['uri']
+      #uri = json[0]['uri']
 
-    '<h3>JSON Response</h3><br/>' + JSON.pretty_generate(json) + '<h3>Endpoint</h3><br/>' + uri
+      @listings.data = JSON.parse(response.body)
+      erb :dash
     end
 end

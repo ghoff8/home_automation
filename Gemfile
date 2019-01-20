@@ -5,9 +5,11 @@ gem "activejob", '4.2.11'
 #for token authentication
 gem 'oauth2'
 
-gem "sinatra"
+gem 'sinatra'
+
+gem 'sinatra-flash'
 #for models
-gem "data_mapper", '1.2.0'
+gem 'data_mapper', '1.2.0'
 
 gem 'rake', '12.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
