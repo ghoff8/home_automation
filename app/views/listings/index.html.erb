@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html>
-
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <body>
     <div class="container">
-      <div id="header" class="span-24">
-        <p>SmartApp</p>
-      </div>
       <div class="table">
-       <h1>All Listings</h1>
+       <h1>Listings</h1>
         <table id="listings">
+         <% if flash[:notice] %>
+        <div id ="success">
+          <%= flash[:notice] %>
+        </div>
+        <% end %>
           <thead>
             <tr>
               <th>ID</th> 
               <th>Name</th>
               <th>Devices</th>
-              <th>Time Created</th>
+              <th>Date Created</th>
+              <% if not @listings.all.size == 0 %>
+                <th>More Info</th>
+              <%end%>
             </tr>
           </thead>
           <tbody>
-            <% @listings&.each do |listing| %>
+            <% @listings.each do |listing| %>
               <tr>
                 <td>
                   <%= listing.id %>
@@ -31,6 +36,9 @@
                 </td>
                 <td>
                   <%= listing.time_created %>
+                </td>
+                <td id="detail">
+                  <%= link_to "Info", listing_path(listing) %>
                 </td>
               </tr>
             <% end %>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <% if flash[:deny] %>
+      <div id ="deny">
+        <%= flash[:deny] %>
+      </div>
+    <% end %>
+  
+    
+    <span id="connect">
+    <%= form_tag connect_index_path%>
+    <%= submit_tag "Connect With SmartThings"%>
+    </span>
+</html>

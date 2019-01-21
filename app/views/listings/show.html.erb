@@ -1,0 +1,16 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+
+<h2>Details about <%= @listing.name %> </h2>
+<ul id="details">
+  <li>
+    Name:
+    <%= @listing.name %>
+  </li>
+  <li>
+    Created on:
+    <%= @listing.time_created.strftime("%B %d, %Y") %>
+  </li>
+</ul>
+<%= button_to 'Edit Info', edit_listing_path, :method => :get %>
+<%= button_to 'Back to Listings', listings_path, :method => :get %>
+<%= button_to 'Delete', listing_path(@listing), :method => :delete%>

@@ -16,7 +16,7 @@
 body {
 	font-family: Helvetica, Arial, Geneva, sans-serif;
 	padding: 2em;
-	border: 8px solid teal;
+	border: 8px solid orange;
 }
 
 error {
@@ -24,6 +24,48 @@ error {
 }
 
 form {
-	border: 1px solid grey;
 	margin: 4px;
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+#connect {
+  font-size: 30px;
+  line-height: 30px;
+	display: flex;
+	justify-content: center;
+}
+#success {
+  color: #13A41C ;
+  display: flex;
+	justify-content: center;
+}
+#deny {
+	color: #A40000;
+	display: flex;
+	justify-content: center;
+}
+
+#listings {
+  margin: 10px;
+  border-collapse: collapse;
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+#listings th {
+  border: 2px solid white;
+  font-weight: bold;
+  background-color: rgb(235, 162, 41);
+}
+
+#listings td {
+	text-align: center;
+	
 }

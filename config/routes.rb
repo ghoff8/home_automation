@@ -53,5 +53,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  root :to => redirect('/')
+  resources :connect 
+  resources :listings
+  root "connect#index"
+  get "/oauth/callback", to: "connect#authorize"
 end

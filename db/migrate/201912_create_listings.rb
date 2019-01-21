@@ -3,8 +3,8 @@ class CreateListings < ActiveRecord::Migration
     create_table :listings do |t|
       t.string 'name'
       t.string 'devices'
-      
-      t.timestamps
+      t.integer 'automation'
+      t.datetime 'time_created'
     end
   end
 end
