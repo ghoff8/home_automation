@@ -36,6 +36,11 @@ input[type=submit] {
     border-radius: 5px; 
 }
 
+#buttons_table {
+  width: 350px;
+  column-width: 5px;
+}
+
 #connect {
   font-size: 30px;
   line-height: 30px;
@@ -59,13 +64,50 @@ input[type=submit] {
   width: 100%;
   border-bottom: 2px solid black;
 }
-#listings th {
+#listings th{
   border: 2px solid white;
   font-weight: bold;
-  background-color: rgb(235, 162, 41);
+  background-color: #9CFFAD;
+  
 }
 
 #listings td {
 	text-align: center;
-	
+	border-bottom: 2px solid black;
+}
+
+#devices {
+  margin: 10px;
+  border-collapse: collapse;
+  width: 40%;
+  border-bottom: 2px solid black;
+}
+
+#devices th {
+  border: 2px solid white;
+  font-weight: bold;
+  background-color: #6C7BFF;
+}
+
+#devices td {
+  	text-align: center;
+  	background-color: #E7D9C3;
+}
+
+#reservations {
+  margin: 10px;
+  border-collapse: collapse;
+  width: 40%;
+  border-bottom: 2px solid black;
+}
+
+#reservations th {
+  border: 2px solid white;
+  font-weight: bold;
+  background-color: #6C7BFF;
+}
+
+#reservations td {
+  	text-align: center;
+  	background-color: #E7D9C3;
 }

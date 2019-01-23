@@ -1,16 +1,60 @@
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 
 <h2>Details about <%= @listing.name %> </h2>
-<ul id="details">
-  <li>
-    Name:
-    <%= @listing.name %>
-  </li>
-  <li>
-    Created on:
-    <%= @listing.time_created.strftime("%B %d, %Y") %>
-  </li>
-</ul>
-<%= button_to 'Edit Info', edit_listing_path, :method => :get %>
-<%= button_to 'Back to Listings', listings_path, :method => :get %>
-<%= button_to 'Delete', listing_path(@listing), :method => :delete%>
+<body>
+<table width = "40%" align="left" id="reservations">
+  <thead>
+    <th>
+      Reservation
+    </th>
+    <th>
+      Start Date
+    </th>
+    <th>
+      End Date
+    </th>
+  </thead>
+  <tbody>
+        <% @devices.each do |device| %>
+          <tr>
+            <td>
+              <%= device.name %>
+            </td>
+            <td>
+              <%= device.type %>
+            </td>
+          </tr>
+        <% end %>
+  </tbody>
+</table>
+
+<table align="right" id="devices">
+  <thead>
+    <th>
+      Device Name
+    </th>
+    <th>
+      Type
+    </th>
+  </thead>
+  <tbody>
+        <% @devices.each do |device| %>
+          <tr>
+            <td>
+              <%= device.name %>
+            </td>
+            <td>
+              <%= device.type %>
+            </td>
+          </tr>
+        <% end %>
+  </tbody>
+</table>
+
+
+</body>
+<table id = "buttons_table">
+  <th><%= button_to 'Back to Listings', listings_path, :method => :get %></th>    
+  <th><%= button_to 'Delete Listing', listing_path(@listing), :method => :delete%></th>
+  
+</table>

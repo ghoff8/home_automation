@@ -8,6 +8,7 @@ class ListingsController < ApplicationController
     def show
         id = params[:id]
         @listing = Listing.find(id)
+        @devices = @listing.devices
     end
     
     def index
@@ -28,11 +29,12 @@ class ListingsController < ApplicationController
         begin
             @listing = Listing.create!(listing_params)
         rescue ActiveRecord::RecordInvalid
-            flash[:deny] = "Name for Listing is required!"
+            flash[:deny] = "Name is required for new listing."
             redirect_to listings_path
+            return
         end
         
-        flash[:notice] = "Listing #{@listing.name} was created successfully!"
+        flash[:success] = "Listing #{@listing.name} was created successfully!"
         redirect_to listings_path
     end
     
