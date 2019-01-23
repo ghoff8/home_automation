@@ -47,7 +47,7 @@ class ConnectController < ApplicationController
         redirect_uri = URI.parse(request.original_url)
         redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
-        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: redirect_uri, scope: 'app')
+        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID,  redirect_uri: redirect_uri, scope: 'app')
         redirect_to url
         #"https://rabbu-app-ghoffma3.c9users.io/oauth/callback"
     end
@@ -79,6 +79,7 @@ class ConnectController < ApplicationController
         puts 'TOKEN EXPIRES IN ' + response.expires_in.to_s
         puts 'TOKEN EXPIRES AT ' + response.expires_at.to_s
         redirect_to listings_path
+        return
     end
     # handle requests to the /getSwitch URL. This is where
     # we will make requests to get information about the configured
