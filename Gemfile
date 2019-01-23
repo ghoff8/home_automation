@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.3.4'
 #security dep in older version
 gem "activejob", '4.2.11'
 #for token authentication
