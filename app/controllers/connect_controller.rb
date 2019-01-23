@@ -44,9 +44,12 @@ class ConnectController < ApplicationController
           authorize_url: '/oauth/authorize',
           token_url: '/oauth/token'
         }
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
-        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: "https://rabbu-app-ghoffma3.c9users.io/oauth/callback", scope: 'app')
+        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: redirect_uri, scope: 'app')
         redirect_to url
+        #"https://rabbu-app-ghoffma3.c9users.io/oauth/callback"
     end
     
     def authorize
@@ -55,6 +58,8 @@ class ConnectController < ApplicationController
             redirect_to connect_index_path
             return
         end
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         
         codeToSend = params[:code]
         options = {
@@ -64,7 +69,7 @@ class ConnectController < ApplicationController
         }
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
         # Use the code to get the token.
-        response = client.auth_code.get_token(codeToSend, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: "https://rabbu-app-ghoffma3.c9users.io/oauth/callback")
+        response = client.auth_code.get_token(codeToSend, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: redirect_uri)
     
         # now that we have the access token, we will store it in the session
         session[:access_token] = response.token
