@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 201915) do
+ActiveRecord::Schema.define(version: 201917) do
 
   create_table "devices", force: :cascade do |t|
-    t.string "listing_id"
-    t.string "name"
-    t.string "type"
+    t.integer "device_id"
+    t.integer "listing_id"
+    t.string  "name"
+    t.string  "device_type"
   end
 
   create_table "listings", force: :cascade do |t|
@@ -29,8 +30,8 @@ ActiveRecord::Schema.define(version: 201915) do
   create_table "reservations", force: :cascade do |t|
     t.string   "listing_id"
     t.string   "name"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
 end

@@ -1,5 +1,6 @@
 class Listing < ActiveRecord::Base
     has_many :devices
+    has_many :reservations
     validates_presence_of :name
     after_initialize :init
     

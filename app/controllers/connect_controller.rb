@@ -8,8 +8,6 @@ class ConnectController < ApplicationController
     CLIENT_ID = '3ca4bb57-753a-42bf-8cea-aa5ace621132'
     CLIENT_SECRET = '0f941e3d-cacb-40f0-9ea6-e8d9b65da3e0'
     
-    
-    
     # helper method to know if we have an access token
     def authenticated?
           session[:access_token]

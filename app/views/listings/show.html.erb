@@ -1,8 +1,31 @@
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-
+<html>
+<head>
 <h2>Details about <%= @listing.name %> </h2>
+ <div style ="display: block; height: 100px">
+  <h1 style = "float: left; margin: 15px"> Reservations</h1>
+  <h1 style = "float: right; margin: 15px"> Devices</h1>
+ </div>
+ <div style="display: in-line">
+  <table>
+  <th><%= button_to 'Add New Reservation'%></th>
+  <th><%= button_to 'Add New Device', new_listing_device_path(:listing_id => @listing.id), :method => :get %></th> 
+  </table>
+</div>
+
+ </head>
 <body>
-<table width = "40%" align="left" id="reservations">
+  <% if flash[:success] %>
+        <div id="success">
+          <%= flash[:success] %>
+        </div>
+         <% elsif flash[:deny] %>
+        <div id="deny">
+          <%= flash[:deny] %>
+        </div>
+  <% end %>
+<div style = "display: block;">
+<table id="reservations" style = "float: left; display: table">
   <thead>
     <th>
       Reservation
@@ -15,20 +38,15 @@
     </th>
   </thead>
   <tbody>
-        <% @devices.each do |device| %>
-          <tr>
-            <td>
-              <%= device.name %>
-            </td>
-            <td>
-              <%= device.type %>
-            </td>
-          </tr>
-        <% end %>
+        
+        
+        
+        
   </tbody>
 </table>
 
-<table align="right" id="devices">
+
+<table id="devices" style = "float: right; display: table">
   <thead>
     <th>
       Device Name
@@ -44,17 +62,24 @@
               <%= device.name %>
             </td>
             <td>
-              <%= device.type %>
+              <%= device.device_type %>
             </td>
           </tr>
         <% end %>
   </tbody>
 </table>
+</div>
 
 
 </body>
-<table id = "buttons_table">
+
+
+
+<div id ="footer">
+<table id = "buttons_table" >
   <th><%= button_to 'Back to Listings', listings_path, :method => :get %></th>    
   <th><%= button_to 'Delete Listing', listing_path(@listing), :method => :delete%></th>
   
 </table>
+</div>
+</html>

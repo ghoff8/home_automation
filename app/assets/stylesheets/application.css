@@ -13,10 +13,12 @@
  *= require_tree .
  *= require_self
  */
+html {
+  border: 8px solid orange;
+}
 body {
 	font-family: Helvetica, Arial, Geneva, sans-serif;
 	padding: 2em;
-	border: 8px solid orange;
 }
 
 error {
@@ -36,8 +38,12 @@ input[type=submit] {
     border-radius: 5px; 
 }
 
+#footer {
+  position: absolute;  
+  bottom: 15;
+}
+
 #buttons_table {
-  width: 350px;
   column-width: 5px;
 }
 
@@ -79,7 +85,7 @@ input[type=submit] {
 #devices {
   margin: 10px;
   border-collapse: collapse;
-  width: 40%;
+  width: 45%;
   border-bottom: 2px solid black;
 }
 
@@ -97,7 +103,7 @@ input[type=submit] {
 #reservations {
   margin: 10px;
   border-collapse: collapse;
-  width: 40%;
+  width: 45%;
   border-bottom: 2px solid black;
 }
 

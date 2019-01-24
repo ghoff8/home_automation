@@ -1,9 +1,10 @@
 class CreateDevices < ActiveRecord::Migration
   def change
     create_table :devices do |t|
-      t.string 'listing_id'
+      t.integer 'device_id'
+      t.integer 'listing_id'
       t.string 'name'
-      t.string 'type'
+      t.string 'device_type'
     end
   end
 end
