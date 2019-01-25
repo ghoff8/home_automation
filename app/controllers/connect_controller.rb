@@ -14,9 +14,6 @@ class ConnectController < ApplicationController
     end
     
     def index
-       # enable :sessions
-        #register Sinatra::Flash
-    
         #before do
         #  @listings = Listings.new()
         #end
@@ -28,7 +25,6 @@ class ConnectController < ApplicationController
         # code after we authenticate with our SmartThings account
         
         # This is the URI we will use to get the endpoints once we've received our token
-        endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints'
         # handle requests to /authorize URL
         
     end
@@ -37,22 +33,29 @@ class ConnectController < ApplicationController
     # will tell SmartThings to call this URL with our
     # authorization code once we've authenticated.
     def create
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         options = {
           site: 'https://graph.api.smartthings.com',
           authorize_url: '/oauth/authorize',
           token_url: '/oauth/token'
         }
+        
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
-        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: "https://rabbu-app-ghoffma3.c9users.io/oauth/callback", scope: 'app')
+        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: redirect_uri, scope: 'app')
         redirect_to url
     end
     
     def authorize
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         if (params[:error] == "access_denied")
             flash[:deny] = "Access Denied"
             redirect_to connect_index_path
             return
         end
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         
         codeToSend = params[:code]
         options = {
@@ -62,7 +65,7 @@ class ConnectController < ApplicationController
         }
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
         # Use the code to get the token.
-        response = client.auth_code.get_token(codeToSend, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: "https://rabbu-app-ghoffma3.c9users.io/oauth/callback")
+        response = client.auth_code.get_token(codeToSend, client_id: CLIENT_ID, client_secret: CLIENT_SECRET, redirect_uri: redirect_uri)
     
         # now that we have the access token, we will store it in the session
         session[:access_token] = response.token
