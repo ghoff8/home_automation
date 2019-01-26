@@ -1,18 +1,18 @@
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 <html>
 <head>
-<h2>Details about <%= @listing.name %> </h2>
- <div style ="display: block; height: 100px">
-  <h1 style = "float: left; margin: 15px"> Reservations</h1>
-  <h1 style = "float: right; margin: 15px"> Devices</h1>
- </div>
+<h1>Details about <%= @listing.name %> </h1>
+ 
  <div style="display: in-line">
   <table>
   <th><%= button_to 'Add New Reservation'%></th>
   <th><%= button_to 'Add New Device', new_listing_device_path(:listing_id => @listing.id), :method => :get %></th> 
   </table>
 </div>
-
+<div style ="display: block; height: 100px">
+  <h2 style = "float: left; margin: 20px"> Reservations</h2>
+  <h2 style = "float: right; margin: 20px"> Devices</h2>
+ </div>
  </head>
 <body>
   <% if flash[:success] %>

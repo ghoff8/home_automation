@@ -2,8 +2,8 @@
 <html>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <body>
-    <div class="container">
-      <div class="table">
+    <div class="container" style = "height: 800px">
+      <div>
        <h1>Listings</h1>
         <table id="listings">
          <% if flash[:success] %>
@@ -52,11 +52,13 @@
             <% end %>
           </tbody>
         </table>
+       
+      </div>
+     
+    </div>
+     <div id="footer">
         <%= button_to 'Add New Listing', new_listing_path, :method => :get %>
-      </div>
-      <div id="footer" class="span-24">
-        <p>Created by Grant Hoffmann</p>
-      </div>
+        <p style="bottom: 0px; float: right; font-size: 90%;">Created by Grant Hoffmann</p>
     </div>
   </body>
 </html>

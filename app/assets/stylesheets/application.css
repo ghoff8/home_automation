@@ -71,6 +71,7 @@ input[type=submit] {
   border-bottom: 2px solid black;
 }
 #listings th{
+  height: 40px;
   border: 2px solid white;
   font-weight: bold;
   background-color: #9CFFAD;
@@ -90,6 +91,7 @@ input[type=submit] {
 }
 
 #devices th {
+  height: 40px;
   border: 2px solid white;
   font-weight: bold;
   background-color: #6C7BFF;
@@ -108,6 +110,7 @@ input[type=submit] {
 }
 
 #reservations th {
+  height: 40px;
   border: 2px solid white;
   font-weight: bold;
   background-color: #6C7BFF;
