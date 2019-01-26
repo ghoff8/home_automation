@@ -1,0 +1,20 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+<h2>Details about <%= @device.name %> in Listing <%= @listing.name %> </h2>
+<ul id="details">
+  <li>
+    Type:
+    <%= @device.device_type%>
+  </li>
+  <li>
+    Status:
+    <%= @status%>
+  </li>
+</ul>
+
+<div id ="footer">
+<table id = "buttons_table" >
+  <th><%= button_to 'Go Back', listing_path(@listing), :method => :get %></th>    
+  <th><%= button_to 'Delete Device'%> </th>
+  
+</table>
+</div>

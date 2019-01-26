@@ -2,13 +2,17 @@
 <html>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <body>
-    <div class="container">
-      <div class="table">
+    <div class="container" style = "height: 800px">
+      <div>
        <h1>Listings</h1>
         <table id="listings">
-         <% if flash[:notice] %>
-        <div id ="success">
-          <%= flash[:notice] %>
+         <% if flash[:success] %>
+        <div id="success">
+          <%= flash[:success] %>
+        </div>
+         <% elsif flash[:deny] %>
+        <div id="deny">
+          <%= flash[:deny] %>
         </div>
         <% end %>
           <thead>
@@ -24,7 +28,11 @@
           </thead>
           <tbody>
             <% @listings.each do |listing| %>
+            <% if listing.id % 2 == 0%>
+              <tr bgcolor = '#E7D9C3'>
+            <% else %>
               <tr>
+            <% end %>
                 <td>
                   <%= listing.id %>
                 </td>
@@ -32,23 +40,25 @@
                   <%= listing.name %>
                 </td>
                 <td>
-                  <%= listing.devices %>
+                  <%= listing.devices.size %>
                 </td>
                 <td>
-                  <%= listing.time_created %>
+                  <%= listing.time_created.strftime("%B %d, %Y ") + listing.time_created.strftime("%H:%M") %>
                 </td>
                 <td id="detail">
-                  <%= link_to "Info", listing_path(listing) %>
+                  <%= link_to "Reservations and Devices", listing_path(listing) %>
                 </td>
               </tr>
             <% end %>
           </tbody>
         </table>
-        <%= link_to 'Add New Listing', new_listing_path %>
+       
       </div>
-      <div id="footer" class="span-24">
-        <p>Created by Grant Hoffmann</p>
-      </div>
+     
+    </div>
+     <div id="footer">
+        <%= button_to 'Add New Listing', new_listing_path, :method => :get %>
+        <p style="bottom: 0px; float: right; font-size: 90%;">Created by Grant Hoffmann</p>
     </div>
   </body>
 </html>

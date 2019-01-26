@@ -1,11 +1,17 @@
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 <h2>Create New Listing</h2>
+
 <%= form_tag listings_path, :method => :post do %>
   <%= label :listing, :name, 'Listing Name' %>
   <%= text_field :listing, :name %>
-<div>
-  <%= submit_tag 'Create Listing' %>
-  <% end %>
-  <%= button_to 'Go Back', listings_path, :method => :get %>
+<div id = "footer">
+<table>
+  
+<td><%= submit_tag 'Create Listing' %></td>
+<% end %>
+
+<td><%= button_to 'Go Back', listings_path, :method => :get %></td>
+</table>
 </div>
+
 

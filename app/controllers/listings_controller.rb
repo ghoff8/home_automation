@@ -1,13 +1,21 @@
 class ListingsController < ApplicationController
-    # Our client ID and secret, used to get the access token
+
+    def authenticated?
+        session[:access_token]
+    end
     
     def listing_params
         params.require(:listing).permit(:name, :time_created)
     end
     
     def show
-        id = params[:id]
-        @listing = Listing.find(id)
+        if !authenticated?
+          redirect '/'
+          return
+        end
+        @listing = Listing.find(params[:id])
+        @devices = @listing.devices
+        @reservations = @listing.reservations
     end
     
     def index
@@ -23,22 +31,27 @@ class ListingsController < ApplicationController
     end
     
     def create
-        #params.require(:name)
         params[:time_created] = Time.now
         begin
             @listing = Listing.create!(listing_params)
         rescue ActiveRecord::RecordInvalid
-            flash[:deny] = "Name for Listing is required!"
+            flash[:deny] = "Name is required for new listing."
             redirect_to listings_path
+            return
         end
         
-        flash[:notice] = "Listing #{@listing.name} was created successfully!"
+        flash[:success] = "Listing #{@listing.name} was created successfully!"
         redirect_to listings_path
     end
     
     def destroy
         @listing = Listing.find(params[:id])
+        @devices = Device.where(listing_id: @listing.id)
+        @devices.each do |device|
+            device.destroy
+        end
         @listing.destroy
+        
         flash[:notice] = "Listing '#{@listing.name}' deleted"
         redirect_to listings_path
     end

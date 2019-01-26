@@ -8,17 +8,12 @@ class ConnectController < ApplicationController
     CLIENT_ID = '3ca4bb57-753a-42bf-8cea-aa5ace621132'
     CLIENT_SECRET = '0f941e3d-cacb-40f0-9ea6-e8d9b65da3e0'
     
-    
-    
     # helper method to know if we have an access token
     def authenticated?
           session[:access_token]
     end
     
     def index
-       # enable :sessions
-        #register Sinatra::Flash
-    
         #before do
         #  @listings = Listings.new()
         #end
@@ -30,7 +25,6 @@ class ConnectController < ApplicationController
         # code after we authenticate with our SmartThings account
         
         # This is the URI we will use to get the endpoints once we've received our token
-        endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints'
         # handle requests to /authorize URL
         
     end
@@ -39,20 +33,24 @@ class ConnectController < ApplicationController
     # will tell SmartThings to call this URL with our
     # authorization code once we've authenticated.
     def create
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         options = {
           site: 'https://graph.api.smartthings.com',
           authorize_url: '/oauth/authorize',
           token_url: '/oauth/token'
         }
-        redirect_uri = URI.parse(request.original_url)
-        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
+        
         client = OAuth2::Client.new(CLIENT_ID, CLIENT_SECRET, options)
-        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID,  redirect_uri: redirect_uri, scope: 'app')
+        url = client.auth_code.authorize_url(code: CLIENT_SECRET, client_id: CLIENT_ID, redirect_uri: redirect_uri, scope: 'app')
+
         redirect_to url
         #"https://rabbu-app-ghoffma3.c9users.io/oauth/callback"
     end
     
     def authorize
+        redirect_uri = URI.parse(request.original_url)
+        redirect_uri = "#{redirect_uri.scheme}://#{redirect_uri.host}" + "/oauth/callback"
         if (params[:error] == "access_denied")
             flash[:deny] = "Access Denied"
             redirect_to connect_index_path

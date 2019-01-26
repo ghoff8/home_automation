@@ -54,7 +54,10 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   resources :connect 
-  resources :listings
+  resources :listings do
+    resources :devices
+  end
+  
   root "connect#index"
   get "/oauth/callback", to: "connect#authorize"
 end

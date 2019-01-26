@@ -13,10 +13,12 @@
  *= require_tree .
  *= require_self
  */
+html {
+  border: 8px solid orange;
+}
 body {
 	font-family: Helvetica, Arial, Geneva, sans-serif;
 	padding: 2em;
-	border: 8px solid orange;
 }
 
 error {
@@ -34,6 +36,15 @@ input[type=submit] {
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
+}
+
+#footer {
+  position: absolute;  
+  bottom: 15;
+}
+
+#buttons_table {
+  column-width: 5px;
 }
 
 #connect {
@@ -59,13 +70,53 @@ input[type=submit] {
   width: 100%;
   border-bottom: 2px solid black;
 }
-#listings th {
+#listings th{
+  height: 40px;
   border: 2px solid white;
   font-weight: bold;
-  background-color: rgb(235, 162, 41);
+  background-color: #9CFFAD;
+  
 }
 
 #listings td {
 	text-align: center;
-	
+	border-bottom: 2px solid black;
+}
+
+#devices {
+  margin: 10px;
+  border-collapse: collapse;
+  width: 45%;
+  border-bottom: 2px solid black;
+}
+
+#devices th {
+  height: 40px;
+  border: 2px solid white;
+  font-weight: bold;
+  background-color: #6C7BFF;
+}
+
+#devices td {
+  	text-align: center;
+  	background-color: #E7D9C3;
+}
+
+#reservations {
+  margin: 10px;
+  border-collapse: collapse;
+  width: 45%;
+  border-bottom: 2px solid black;
+}
+
+#reservations th {
+  height: 40px;
+  border: 2px solid white;
+  font-weight: bold;
+  background-color: #6C7BFF;
+}
+
+#reservations td {
+  	text-align: center;
+  	background-color: #E7D9C3;
 }
