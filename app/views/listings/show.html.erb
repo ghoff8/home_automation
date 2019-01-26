@@ -59,7 +59,7 @@
         <% @devices.each do |device| %>
           <tr>
             <td>
-              <%= device.name %>
+              <%= link_to device.name, listing_device_path(device, :listing_id => device.listing_id) %>
             </td>
             <td>
               <%= device.device_type %>

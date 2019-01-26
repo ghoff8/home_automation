@@ -18,8 +18,6 @@ class DevicesController < ApplicationController
             return
         end
             
-        
-        
         endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints'
         token = session[:access_token]
     
@@ -52,10 +50,53 @@ class DevicesController < ApplicationController
         when "Device Added Successfully"
             flash[:success] = "Device #{@device.name} created successfully!"
         else
-            flash[:deny] = "Error Creating Device"
+            flash[:deny] = response.body
             @device.destroy
         end
         redirect_to listing_path(@listing.id)
     end
     
+    def show
+        @listing = Listing.find(params[:listing_id])
+        @device = Device.find(params[:id])
+        
+        endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints'
+        token = session[:access_token]
+    
+        url = URI.parse(endpoints_uri)
+        req = Net::HTTP::Get.new(url.request_uri)
+
+        # we set a HTTP header of "Authorization: Bearer <API Token>"
+        req['Authorization'] = 'Bearer ' + token
+    
+        http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = (url.scheme == "https")
+
+        response = http.request(req)
+        json = JSON.parse(response.body)
+        uri = json[0]['uri']
+        newUrl = uri + "/getStatus?id=#{@device.id}&type=#{@device.device_type}"
+       
+        statusUrl = URI.parse(newUrl)
+        
+        statusHttp = Net::HTTP.new(statusUrl.host, statusUrl.port)
+        statusHttp.use_ssl = true
+       
+        
+        statusReq = Net::HTTP::Get.new(statusUrl.request_uri)
+        statusReq['Authorization'] = 'Bearer ' + token
+        #statusReq.set_form_data('id' => @device.id, 'type' => @device.device_type)
+        #we set a HTTP header of "Authorization: Bearer <API Token>
+        
+        response = statusHttp.request(statusReq)
+        puts response.body
+        case response.body
+        when "Device does not exist"
+            @status = "Smartthings Device does not exist"
+        when "Device not found"
+            @status = "Smartthings Device not found"
+        else
+            @status = response.body
+        end
+    end
 end

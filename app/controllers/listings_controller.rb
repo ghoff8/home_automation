@@ -13,8 +13,7 @@ class ListingsController < ApplicationController
           redirect '/'
           return
         end
-        id = params[:id]
-        @listing = Listing.find(id)
+        @listing = Listing.find(params[:id])
         @devices = @listing.devices
         @reservations = @listing.reservations
     end
