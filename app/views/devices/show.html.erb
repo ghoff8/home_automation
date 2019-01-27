@@ -14,7 +14,6 @@
 <div id ="footer">
 <table id = "buttons_table" >
   <th><%= button_to 'Go Back', listing_path(@listing), :method => :get %></th>    
-  <th><%= button_to 'Delete Device'%> </th>
-  
+  <th><%= button_to 'Delete Device', listing_device_path(@device, :listing_id => @device.listing_id), :method => :delete %> </th>
 </table>
 </div>

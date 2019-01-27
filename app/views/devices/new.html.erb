@@ -8,9 +8,9 @@
   <%= select :device, :device_type, ['Light', 'Lock', 'Thermostat'] %>
 <div id = "footer">
 <table>
-
-<td><%= button_to 'Go Back', listing_path(:id => @listing.id), :method => :get %></td>  
 <% end %>
+<td><%= button_to 'Go Back', listing_path(:id => @listing.id), :method => :get %></td>  
+
 
 <td><%= submit_tag 'Create Device' %></td>
 </table>

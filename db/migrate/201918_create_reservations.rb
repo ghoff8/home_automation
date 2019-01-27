@@ -3,6 +3,7 @@ class CreateReservations < ActiveRecord::Migration
     create_table :reservations do |t|
       t.string 'listing_id'
       t.string 'name'
+      t.datetime 'time_created'
       t.datetime 'start_date'
       t.datetime 'end_date'
     end

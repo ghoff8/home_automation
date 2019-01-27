@@ -1,0 +1,28 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+<h2>Details about <%= @reservation.name %> in Listing <%= @listing.name %> </h2>
+<ul id="details">
+  <li>
+    Name:
+    <%= @reservation.name %>
+  </li>
+  <li>
+    Time Created:
+    <%= @reservation.time_created.strftime("%B %d, %Y ") + @reservation.time_created.strftime("%H:%M")%>
+  </li>
+  <li>
+    Start Date:
+    <%= @reservation.start_date.strftime("%B %d, %Y ")%>
+  </li>
+  <li>
+    End Date:
+    <%= @reservation.end_date.strftime("%B %d, %Y ")%>
+  </li>
+</ul>
+
+<div id ="footer">
+<table id = "buttons_table" >
+  <th><%= button_to 'Go Back', listing_path(@listing), :method => :get %></th>    
+  <th><%= button_to 'Delete Reservation', listing_reservation_path(@reservation, :listing_id => @reservation.listing_id), :method => :delete %> </th>
+  
+</table>
+</div>

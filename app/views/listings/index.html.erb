@@ -20,7 +20,9 @@
               <th>ID</th> 
               <th>Name</th>
               <th>Devices</th>
+              <th>Reservations</th>
               <th>Date Created</th>
+              <th>Automation</th>
               <% if not @listings.all.size == 0 %>
                 <th>More Info</th>
               <%end%>
@@ -43,7 +45,17 @@
                   <%= listing.devices.size %>
                 </td>
                 <td>
+                  <%= listing.reservations.size %>
+                </td>
+                <td>
                   <%= listing.time_created.strftime("%B %d, %Y ") + listing.time_created.strftime("%H:%M") %>
+                </td>
+                <td>
+                  <% if (listing.automation == 1) %>
+                  On
+                  <% else %>
+                  Off
+                  <% end %>
                 </td>
                 <td id="detail">
                   <%= link_to "Reservations and Devices", listing_path(listing) %>

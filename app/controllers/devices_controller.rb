@@ -92,11 +92,59 @@ class DevicesController < ApplicationController
         puts response.body
         case response.body
         when "Device does not exist"
-            @status = "Smartthings Device does not exist"
+            @status = "Smartthings device does not exist"
         when "Device not found"
-            @status = "Smartthings Device not found"
+            @status = "Smartthings device not found"
         else
             @status = response.body
         end
     end
+    
+    def destroy
+        @listing = Listing.find(params[:listing_id])
+        @device = Device.find(params[:id])
+        
+        endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints'
+        token = session[:access_token]
+    
+        url = URI.parse(endpoints_uri)
+        req = Net::HTTP::Get.new(url.request_uri)
+
+        # we set a HTTP header of "Authorization: Bearer <API Token>"
+        req['Authorization'] = 'Bearer ' + token
+    
+        http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = (url.scheme == "https")
+
+        response = http.request(req)
+        json = JSON.parse(response.body)
+        uri = json[0]['uri']
+        
+        newUrl = uri + "/deleteDevice?id=#{@device.id}&type=#{@device.device_type}"
+       
+        deleteUrl = URI.parse(newUrl)
+        
+        deleteHttp = Net::HTTP.new(deleteUrl.host, deleteUrl.port)
+        deleteHttp.use_ssl = true
+       
+        
+        deleteReq = Net::HTTP::Delete.new(deleteUrl.request_uri)
+        deleteReq['Authorization'] = 'Bearer ' + token
+        #deleteReq.set_form_data('id' => @device.id, 'type' => @device.device_type)
+        #we set a HTTP header of "Authorization: Bearer <API Token>
+        
+        response = deleteHttp.request(deleteReq)
+        puts response
+        case response
+        when Net::HTTPNoContent
+            flash[:success] = "Device '#{@device.name}' deleted"
+            @device.destroy
+        when "Device not found"
+            flash[:deny] = "Device not found"
+        when "Device type does not exist"
+            flash[:deny] = "Device type does not exist"
+        end
+        redirect_to listing_path(@listing)
+    end
+    
 end
