@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 201917) do
+ActiveRecord::Schema.define(version: 201919) do
 
   create_table "devices", force: :cascade do |t|
     t.integer "listing_id"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 201917) do
 
   create_table "listings", force: :cascade do |t|
     t.string   "name"
-    t.string   "devices"
     t.integer  "automation"
     t.datetime "time_created"
   end
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(version: 201917) do
   create_table "reservations", force: :cascade do |t|
     t.string   "listing_id"
     t.string   "name"
+    t.datetime "time_created"
     t.datetime "start_date"
     t.datetime "end_date"
   end

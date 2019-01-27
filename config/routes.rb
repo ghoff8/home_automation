@@ -56,8 +56,13 @@ Rails.application.routes.draw do
   resources :connect 
   resources :listings do
     resources :devices
+    resources :reservations
+    member do
+      put "automation"
+    end
   end
   
   root "connect#index"
   get "/oauth/callback", to: "connect#authorize"
+  
 end

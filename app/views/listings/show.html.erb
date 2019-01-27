@@ -5,8 +5,15 @@
  
  <div style="display: in-line">
   <table>
-  <th><%= button_to 'Add New Reservation'%></th>
+  <th><%= button_to 'Add New Reservation',  new_listing_reservation_path(:listing_id => @listing.id), :method => :get %></th>
   <th><%= button_to 'Add New Device', new_listing_device_path(:listing_id => @listing.id), :method => :get %></th> 
+  <th>
+    <%if (@listing.automation == 1)%>
+        <%= button_to 'Turn Automation OFF', automation_listing_path, :method => :put%>
+      <% else %>
+        <%= button_to 'Turn Automation ON', automation_listing_path, :method => :put%>
+    <% end %>
+  </th>
   </table>
 </div>
 <div style ="display: block; height: 100px">
@@ -28,7 +35,7 @@
 <table id="reservations" style = "float: left; display: table">
   <thead>
     <th>
-      Reservation
+      Reservation Name
     </th>
     <th>
       Start Date
@@ -38,10 +45,19 @@
     </th>
   </thead>
   <tbody>
-        
-        
-        
-        
+        <% @reservations.each do |res| %>
+          <tr>
+            <td>
+              <%= link_to res.name, listing_reservation_path(res, :listing_id => res.listing_id) %>
+            </td>
+            <td>
+              <%= res.start_date.strftime("%B %d, %Y")%>
+            </td>
+             <td>
+              <%= res.end_date.strftime("%B %d, %Y") %>
+            </td>
+          </tr>
+        <% end %>
   </tbody>
 </table>
 
@@ -52,7 +68,7 @@
       Device Name
     </th>
     <th>
-      Type
+      ID
     </th>
   </thead>
   <tbody>
@@ -62,7 +78,7 @@
               <%= link_to device.name, listing_device_path(device, :listing_id => device.listing_id) %>
             </td>
             <td>
-              <%= device.device_type %>
+              <%= device.id %>
             </td>
           </tr>
         <% end %>
@@ -78,7 +94,7 @@
 <div id ="footer">
 <table id = "buttons_table" >
   <th><%= button_to 'Back to Listings', listings_path, :method => :get %></th>    
-  <th><%= button_to 'Delete Listing', listing_path(@listing), :method => :delete%></th>
+  <th><%= button_to 'Delete Listing', listing_path(@listing), :method => :delete %></th>
   
 </table>
 </div>

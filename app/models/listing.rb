@@ -5,6 +5,7 @@ class Listing < ActiveRecord::Base
     after_initialize :init
     
     def init
-        self.time_created ||= Time.zone.now#.in_time_zone("Eastern Time (US & Canada)")
+        self.time_created ||= Time.zone.now
+        self.automation ||= 0
     end
 end

@@ -1,0 +1,19 @@
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+<h2>Create New Reservation for Listing <%= @listing.name %></h2>
+
+<%= form_tag listing_reservations_path(:id => @listing.id), :method => :post do %>
+  <%= label :reservation, :name, 'Reservation Name' %>
+  <%= text_field :reservation, :name %>
+  <%= label :reservation, :start_date, "Start Date" %>
+  <%= date_field :reservation, :start_date %>
+  <%= label :reservation,:end_date, "End Date" %>
+  <%= date_field :reservation, :end_date %>
+
+<div id = "footer">
+<table>
+<% end %>
+<td><%= button_to 'Go Back', listing_path(:id => @listing.id), :method => :get %></td>
+
+<td><%= submit_tag 'Create Reservation' %></td>
+</table>
+</div>
